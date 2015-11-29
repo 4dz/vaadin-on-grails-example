@@ -13,14 +13,13 @@ class StartView extends VerticalLayout implements View {
     public StartView(Navigator navigator) {
         setSizeFull();
 
-        Button button = new Button()
-        button.with {
+        new Button().with {
             caption="Go to Main View"
             addClickListener { navigator.navigateTo NavigatorUI.MAINVIEW }
-        }
 
-        addComponent button
-        setComponentAlignment button, Alignment.MIDDLE_CENTER
+            this.addComponent it
+            this.setComponentAlignment it, Alignment.MIDDLE_CENTER
+        }
     }
 
     @Override
