@@ -1,28 +1,86 @@
 package app.views
 
 import app.NavigatorUI
+import com.vaadin.annotations.DesignRoot
 import com.vaadin.navigator.Navigator
 import com.vaadin.navigator.View
 import com.vaadin.navigator.ViewChangeListener
-import com.vaadin.ui.Alignment
-import com.vaadin.ui.Button
-import com.vaadin.ui.Notification
-import com.vaadin.ui.VerticalLayout
+import com.vaadin.server.ThemeResource
+import com.vaadin.ui.*
+import com.vaadin.ui.declarative.Design
 
-
+@DesignRoot
 class MainView extends VerticalLayout implements View {
+    Navigator navigator
+
+// Menu navigation button listener
+    class ButtonListener implements Button.ClickListener {
+        String menuitem;
+        public ButtonListener(String menuitem) {
+            this.menuitem = menuitem;
+        }
+
+        @Override
+        public void buttonClick(Button.ClickEvent event) {
+            // Navigate to a specific state
+            navigator.navigateTo(NavigatorUI.MAINVIEW + "/" + menuitem);
+        }
+    }
+
+    VerticalLayout menuContent;
+    Panel equalPanel;
+    Button logout;
+
     public MainView(Navigator navigator) {
-        setSizeFull();
+        Design.read(this);
 
-        Button button = new Button("Go to Start View")
-        button.addClickListener { navigator.navigateTo NavigatorUI.STARTVIEW }
+        this.navigator = navigator
 
-        addComponent button
-        setComponentAlignment button, Alignment.MIDDLE_CENTER
+        menuContent.addComponent(new Button("Pig",
+                new ButtonListener("pig")));
+        menuContent.addComponent(new Button("Cat",
+                new ButtonListener("cat")));
+        menuContent.addComponent(new Button("Dog",
+                new ButtonListener("dog")));
+        menuContent.addComponent(new Button("Reindeer",
+                new ButtonListener("reindeer")));
+        menuContent.addComponent(new Button("Penguin",
+                new ButtonListener("penguin")));
+        menuContent.addComponent(new Button("Sheep",
+                new ButtonListener("sheep")));
+
+        // Allow going back to the start
+        logout.addClickListener { navigator.navigateTo("") }
+    }
+
+    @DesignRoot
+    class AnimalViewer extends VerticalLayout {
+        Label watching;
+        Embedded pic;
+        Label back;
+
+        public AnimalViewer(String animal) {
+            Design.read(this);
+
+            watching.setValue("You are currently watching a " +
+                    animal);
+            pic.setSource(new ThemeResource(
+                    "img/" + animal + "-128px.png"));
+            back.setValue("and " + animal +
+                    " is watching you back");
+        }
     }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        Notification.show "Welcome to the Main View"
+        if (event.getParameters() == null
+                || event.getParameters().isEmpty()) {
+            equalPanel.setContent(
+                    new Label("Nothing to see here, " +
+                            "just pass along."));
+            return;
+        } else
+            equalPanel.setContent(new AnimalViewer(
+                    event.getParameters()));
     }
 }

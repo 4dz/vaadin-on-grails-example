@@ -1,0 +1,1 @@
+* Vaadin Design HTML files are in web-app/conf/... which isn't ideal, how do you get a resources folder in grails? 
