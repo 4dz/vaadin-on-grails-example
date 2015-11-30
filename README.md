@@ -36,7 +36,6 @@ There are three places this appears to work,
 
  * In grails-app/conf/ : which isn't ideal, as I don't consider these to be configuration files
  * Alternatively can go in src/java/ : again not ideal as they are not Java source files
- * Alternatively can go in web-app/WEB-INF/ : probably the best option.
  
 By default Vaadin looks for a HTML file named by the class simple name followed by ".html"; within the same package 
 folder structure as the the View class.  In this example, app.views.MainView will look for /app/views/MainView.html.
