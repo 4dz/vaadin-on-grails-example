@@ -32,7 +32,7 @@ hibernate-validator jar as a runtime dependency in BuildConfig.groovy:
 
 ## Declarative Design
 Vaadin on Grails can use declarative design, but you have to put the design HTML files on the classpath.
-There are three places this appears to work,
+There are two places this appears to work,
 
  * In grails-app/conf/ : which isn't ideal, as I don't consider these to be configuration files
  * Alternatively can go in src/java/ : again not ideal as they are not Java source files
@@ -48,6 +48,13 @@ This can be overridden in the @DesignRoot annotation if your wish.
     }
 
 Hence by default the class above will look for /app/views/AnimalView.html on the classpath.
+
+    /src
+        /java
+            /app
+                /views
+                    AnimalViewer.html
+                    MainView.html
 
 ## Static Content
 In the original example in the [Book of Vaadin](https://vaadin.com/book/), it contains cartoon pictures of various
