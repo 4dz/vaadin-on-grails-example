@@ -1,6 +1,12 @@
 # Vaadin On Grails: Navigator, Declarative Design, Static Content
 This project is a port of one of the examples within the Vaadin manual "[Book of Vaadin](https://vaadin.com/book/)" from
-Java to Groovy on Grails.
+Java to Groovy on Grails.  It uses the [Vaadin Grails Plugin](https://grails.org/plugin/vaadin), Vaadin 7, Groovy 2.x, 
+and Grails 2.x 
+
+If you have SDKMAN (the latest version of GVM) installed you can switch between versions of Grails with, for example,
+
+    sdk default grails 2.5.3
+    sdk default groovy 2.4.5
 
 Chapter 11.9. [Navigating in an Application](https://vaadin.com/book/-/page/advanced.navigator.html) introduces 
 navigation between views but also uses a mixture of programmatic design (think, Swing-like programming) as well as 
@@ -106,3 +112,4 @@ so a Link Generator seems safer.
 * [Download Grails](https://grails.org/download.html)
 * [Book of Vaadin](https://vaadin.com/book/)
 * [Vaadin On Grails](http://vaadinongrails.com)
+* [SDKMAN](http://sdkman.io)
