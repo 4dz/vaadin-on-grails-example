@@ -1,4 +1,4 @@
-# Vaadin On Grails: Navigator and Declarative Design
+# Vaadin On Grails: Navigator, Declarative Design, Static Content
 This project is a port of one of the examples within the Vaadin manual "[Book of Vaadin](https://vaadin.com/book/)" from
 Java to Groovy on Grails.
 
@@ -50,6 +50,49 @@ This can be overridden in the @DesignRoot annotation if your wish.
 
 Hence by default the class above will look for /app/views/AnimalView.html on the classpath.
 
+## Static Content
+In the original example in the [Book of Vaadin](https://vaadin.com/book/), it contains cartoon pictures of various
+animals which are served as images.  In the example, these images are part of the Vaadin 'reindeer' theme; however,
+these images are not present in the theme - at least, not in Vaadin v7.5.
+
+![cat-128px.png](grails-app/assets/images/cat-128px.png)
+![dog-128px.png](grails-app/assets/images/dog-128px.png)
+![penguin-128px.png](grails-app/assets/images/penguin-128px.png)
+![pig-128px.png](grails-app/assets/images/pig-128px.png)
+![reindeer-128px.png](grails-app/assets/images/reindeer-128px.png)
+
+The Grails Asset Pipeline plugin can serve up images from the grails-app/assets/images folder.  
+
+    - grails-app
+        -assets
+            - images
+                - cat-128px.png
+                - dog-128px.png
+            
+However the url for the images will be /assets/cat-128px.png.  The 'images' folder does not appear to form part of the
+filename.
+
+There are two ways to identify these images from within the Vaadin classes.
+
+
+### 1. As a Binary Stream
+It is possible to register a Stream against a filename and obtain a URL for that stream.
+
+    AssetResourceLocator assetLocator = Grails.get AssetResourceLocator
+    pic.source = new StreamResource(
+                         {assetLocator.findAssetForURI("$animal-128px.png").getInputStream()}, 
+                         "$animal-128px.png")
+
+This seems risky, as it assumes the resource will always be binary and require a stream. 
+
+### 2. As a LinkGenerator URL
+It is possible to configure Grails to server content from a static web server or even Amazon S3; 
+so a Link Generator seems safer.
+
+    AssetProcessorService assetService = Grails.get AssetProcessorService
+    DefaultLinkGenerator defLinkGenerator = Grails.get DefaultLinkGenerator
+
+    pic.source = new ExternalResource(assetService.asset(file:"$animal-128px.png", defLinkGenerator))
 
  
  

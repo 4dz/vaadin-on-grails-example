@@ -7,9 +7,9 @@ vaadin {
     ]
 
     // Extra mapping in case you need 'reserve' a URL and it shouldn't be mapped to e.g. /* by Vaadin
-    // mappingExtras = [
-    //         '/console/*'
-    // ]
+    mappingExtras = [
+             '/images/*', '/assets/*'
+    ]
 
     // This is optional, all packages will get scanned by default.
     // packages = ['com.mycompany.vaadin']
